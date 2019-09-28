@@ -7,9 +7,14 @@ class HangpersonGame
 
   # def initialize()
   # end
+
+  attr_accessor :word, :guesses, :wrong_guesses, :valid
   
   def initialize(word)
     @word = word
+    @guesses = ""
+    @wrong_guesses = ""
+    @valid = ""
   end
 
   # You can test it by running $ bundle exec irb -I. -r app.rb
@@ -23,5 +28,46 @@ class HangpersonGame
       return http.post(uri, "").body
     }
   end
+
+def guess(letter)
+  if letter == nil || letter == ''
+    raise ArgumentError
+  elsif !(/[a-zA-z]/=~ letter) 
+    raise ArgumentError
+  end
+  letter = letter.downcase
+  if word.include? letter
+    if !self.guesses.include? letter
+      self.guesses += letter
+    else
+      self.valid = false
+    end
+  else
+    if !self.wrong_guesses.include? letter
+      self.wrong_guesses += letter
+    else
+      self.valid = false
+    end 
+  end
+end
+
+# def check_win_or_lose
+#   if wrong_guesses >= 7
+#     return :lose
+#   elsif guesses == word
+#     return :win
+#   else
+#     return :play
+# end
+
+def word_with_guesses
+  # regex = '/[^'+ self.guesses+']/'
+  if self.guesses
+    return self.word.sub(/^#{self.guesses}/, '-')
+  else
+    return self.word.sub(/[a-zA-Z]/, '-')
+  end
+end
+
 
 end
