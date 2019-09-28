@@ -39,12 +39,14 @@ def guess(letter)
   if word.include? letter
     if !self.guesses.include? letter
       self.guesses += letter
+      self.valid = true
     else
       self.valid = false
     end
   else
     if !self.wrong_guesses.include? letter
       self.wrong_guesses += letter
+      self.valid = true
     else
       self.valid = false
     end 
