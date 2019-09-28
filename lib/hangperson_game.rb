@@ -51,21 +51,22 @@ def guess(letter)
   end
 end
 
-# def check_win_or_lose
-#   if wrong_guesses >= 7
-#     return :lose
-#   elsif guesses == word
-#     return :win
-#   else
-#     return :play
-# end
+def check_win_or_lose
+  if wrong_guesses.length >= 7
+    return :lose
+  elsif self.word.gsub(/((?![#{self.guesses}])[A-Za-z])/, '-') == self.word
+    return :win
+  else
+    return :play
+  end
+end
 
 def word_with_guesses
   # regex = '/[^'+ self.guesses+']/'
-  if self.guesses
-    return self.word.sub(/^#{self.guesses}/, '-')
+  if self.guesses != ''
+    return self.word.gsub(/((?![#{self.guesses}])[A-Za-z])/, '-')
   else
-    return self.word.sub(/[a-zA-Z]/, '-')
+    return self.word.gsub(/[a-zA-Z]/, '-')
   end
 end
 
