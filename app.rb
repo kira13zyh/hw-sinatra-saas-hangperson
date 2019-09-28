@@ -40,10 +40,11 @@ class HangpersonApp < Sinatra::Base
   post '/guess' do
 
     letter = params[:guess].to_s[0]
-    @game.guess(letter)
     if (@game.guesses.include? letter) || (@game.wrong_guesses.include? letter)
       flash[:message] = "You have already used that letter."
-    elsif @game.valid == false
+    end
+    @game.guess(letter)
+    if @game.valid == false
       flash[:message] = "Invalid guess"
     end
     ### YOUR CODE HERE ###
@@ -72,14 +73,18 @@ class HangpersonApp < Sinatra::Base
   
   get '/win' do
     ### YOUR CODE HERE ###
-    flash[:message] = "You Win!"
-    erb :win # You may change/remove this line
+    if @game.check_win_or_lose == :win
+      flash[:message] = "You Win!"
+      erb :win # You may change/remove this line
+    end
   end
   
   get '/lose' do
     ### YOUR CODE HERE ###
-    flash[:message] = "Sorry, you lose!"
-    erb :lose # You may change/remove this line
+    if @game.check_win_or_lose == :lose
+      flash[:message] = "Sorry, you lose!"
+      erb :lose # You may change/remove this line
+    end
   end
   
 end
