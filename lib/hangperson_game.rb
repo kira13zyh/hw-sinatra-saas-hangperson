@@ -54,7 +54,7 @@ end
 def check_win_or_lose
   if wrong_guesses.length >= 7
     return :lose
-  elsif self.word.gsub(/((?![#{self.guesses}])[A-Za-z])/, '-') == self.word
+  elsif self.guesses != '' && self.word.gsub(/((?![#{self.guesses}])[A-Za-z])/, '-') == self.word
     return :win
   else
     return :play
